@@ -1,0 +1,26 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+.header {
+	width: 100%;
+	height: 88px;
+	background: pink;
+}
+.clear::after {
+	display: block;
+	clear: both;
+	content: '';
+}
+.left {
+	width: 200px;
+	height: 100%;
+	background: pink;
+}
+.right {
+	width: 100%;
+	height: 100%;
+}
+body {
+	scroll: no;
+}

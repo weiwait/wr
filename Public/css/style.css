@@ -46,6 +46,7 @@ html {
 	color: #fff;
 	font-style: normal;
 	font-weight: 400;
+	cursor: pointer;
 }
 .level-line {
 	width: 100%;
@@ -53,14 +54,41 @@ html {
 	border-bottom: 1px solid #a7a7a7;
 	margin: 0 0 50px 0;
 }
-.banner, .banner ul {
+.banner, .banner-content {
 	margin: 0 auto;
 	width: 840px;
 	height: 520px;
 	position: relative;
 }
-.banner ul {
+.banner-content  {
 	overflow: hidden;
+}
+.banner-content li {
+	display: block;
+	width: 840px;
+	height: 520px;
+}
+.left-img {
+	width: 520px;
+	height: 520px;
+	float: left;
+}
+.right-text {
+	width: 320px;
+	height: 520px;
+	float: right;
+	background: red;
+}
+.left-onlytext, .right-onlytext {
+	width: 386px;
+	height: 520px;
+	background: green;
+}
+.left-onlytext {
+	float: left;
+}
+.right-onlytext {
+	float: right;
 }
 .bd ul li:first-child {
 	display: block;
@@ -90,16 +118,53 @@ html {
 	height: 30px;
 	margin: 10px auto;
 	border-bottom: 1px solid #a7a7a7;
+	padding: 130px 0 0 0;
 }
 .hd {
-	width: 300px;
+	width: 840px;
 	height: 30px;
 	position: absolute;
-	bottom: -38px;
+	bottom: -42px;
+	border-top: 1px solid #b7b7b7;
 }
 .hd ul li {
 	width: 13px;
 	height: 12px;
 	float: left;
 	font-size: 0;
+	cursor: pointer;
+}
+.banner-button {
+	margin: 8px 0 0 0;
+}
+.play {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	right: 0;
+	bottom: -56px;
+	cursor: pointer;
+	-webkit-filter: grayscale(1);
+	-o-filter: grayscale(1);
+	filter: grayscale(1);
+}
+.play .play-right {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+}
+.play .play-right .mask2 {
+	width: 20px;
+	height: 40px;
+	float: right;
+}
+.play .play-left {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+}
+.play .play-left .mask1{
+	width: 20px;
+	height: 40px;
+	float: left;
 }
