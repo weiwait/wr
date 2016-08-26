@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+li {
+    list-style: none;
+}
+h3 {
+    clear: both;
+    text-indent: 30px;
+    height: 60px;
+    background: #def;
+    line-height: 60px;
+}
+.server_info_right {
+    margin: 10px 35px;
+    float: left;
+}
+.server_info_left {
+    margin: 10px 35px;
+    float: left;
+}
+.server_info_left li,
+.server_info_right li {
+    height: 30px;
+    line-height: 30px;
+}

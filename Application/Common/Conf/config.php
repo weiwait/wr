@@ -3,7 +3,7 @@ return array(
 	//'配置项'=>'配置值'
 	'TMPL_FILE_DEPR' => '-',
 
-	'URL_MODEL' => 2,
+	// 'URL_MODEL' => 2,
 
 	'DB_TYPE' => 'MYSQL',
 	'DB_HOST' => '127.0.0.1',

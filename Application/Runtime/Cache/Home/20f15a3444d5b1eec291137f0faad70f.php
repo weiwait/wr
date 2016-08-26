@@ -61,7 +61,7 @@
 
 
 	<?php foreach($nav as $key => $title) { $point = 0; ?>
-		<div <?php if($key == 0) { ?>style="padding:0;<?php }?>" class="title" id="<?php echo ($title['nav-name']); ?>" name="<?php echo ($title['nav-name']); ?>"><?php echo ($title['nav-name']); ?></div>
+		<div <?php if($key == 0) { ?>style="padding:0;"<?php }?> class="title" id="<?php echo ($title['nav-name']); ?>" name="<?php echo ($title['nav-name']); ?>"><?php echo ($title['nav-name']); ?></div>
 		<div class="banner">
 			<div class="play">
 				<div class="play-left">
@@ -73,8 +73,11 @@
 			</div>
 			<div class="bd">
 				<ul class="banner-content">
-					<?php foreach($content as $item) { if($title['id'] == $item['nav-id']) { $point++; switch($item['type']) { case 1 : ?> <li><img src="/wr/Public/images/<?php echo ($item['image']); ?>" alt=""></li><?php break; case 2 : ?> <li><div class="left-img"><img src="/wr/Public/images/<?php echo ($item['image']); ?>" alt=""></div>
-												<div class="right-text"><?php echo ($item['text-right']); ?></div></li><?php break; case 3 : ?> <li><div class="left-onlytext"><?php echo ($item['text-left']); ?></div>
+					<?php foreach($content as $item) { if($title['id'] == $item['nav-id']) { $point++; switch($item['type']) { case 1 : ?> <li><img src="/wr/Public/images/<?php echo ($item['image']); ?>" alt=""></li><?php break; case 2 : ?> <li>
+												<div class="left-img"><img src="/wr/Public/images/<?php echo ($item['image']); ?>" alt=""></div>
+												<div class="right-text"><?php echo ($item['text-right']); ?></div>
+											</li><?php break; case 3 : ?> <li>
+												<div class="left-onlytext"><?php echo ($item['text-left']); ?></div>
 												<div class="right-onlytext"><?php echo ($item['text-right']); ?></div>
 											</li>
 					<?php break;}}}?>
@@ -93,65 +96,6 @@
 		</div>
 	<?php }?>
 
-
-<!-- 	<div class="title">snapshot</div>
-	<div class="banner">
-		<div class="hd">
-			<ul class="clear banner-button">
-				<li>1</li>
-				<li>2</li>
-			</ul>
-		</div>
-		<div class="play">
-			<div class="play-left">
-				<div class="mask1"></div>
-			</div>
-			<div class="play-right">
-				<div class="mask2"></div>
-			</div>
-		</div>
-		<div class="bd">
-			<ul class="banner-content">
-				<li><img src="/wr/Public/images/1.jpg" alt=""></li>
-				<li>
-					<div class="left-img"><img src="/wr/Public/images/small.jpg" alt=""></div>
-					<div class="right-text"></div>
-				</li>
-			</ul>
-		</div>
-		<a class="prev" href="javascript:void(0)"></a>
-		<a class="next" href="javascript:void(0)"></a>
-	</div>
-
-
-	<div class="title">snapshot</div>
-	<div class="banner">
-		<div class="hd">
-			<ul class="clear banner-button">
-				<li>1</li>
-				<li>2</li>
-			</ul>
-		</div>
-		<div class="play">
-			<div class="play-left">
-				<div class="mask1"></div>
-			</div>
-			<div class="play-right">
-				<div class="mask2"></div>
-			</div>
-		</div>
-		<div class="bd">
-			<ul class="banner-content">
-				<li><img src="/wr/Public/images/1.jpg" alt=""></li>
-				<li>
-					<div class="left-onlytext"></div>
-					<div class="right-onlytext"></div>
-				</li>
-			</ul>
-		</div>
-		<a class="prev" href="javascript:void(0)"></a>
-		<a class="next" href="javascript:void(0)"></a>
-	</div> -->
 
 	<script>
 		$('.banner').slide({"mainCell": ".bd ul", "autoPlay": false, "delayTime": 3000});

@@ -6,7 +6,7 @@ class IndexController extends Controller {
         $nav = M('Nav');
         $content = M('Content');
         $content = $content->select();
-        $nav = $nav->select();
+        $nav = $nav->order('sort asc')->select();
     	$logo = 'wright-design.png';
         $this->assign('nav', $nav);
     	$this->assign('logo', $logo);
