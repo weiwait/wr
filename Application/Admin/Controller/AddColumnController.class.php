@@ -15,7 +15,11 @@ class AddColumnController extends Controller
             $this->display();
             return;
         }
-        $data['nav-name'] = empty(I('post.nav')) ? echo 0 : I('post.nav');
+        $data['nav-name'] = trim(I('post.nav'));
+        if (empty($data['nav-name'])) {
+            echo 0;
+            return;
+        }
         $data['sort'] = I('post.sort');
         echo M('Nav')->add($data);
     }

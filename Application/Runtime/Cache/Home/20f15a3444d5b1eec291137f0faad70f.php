@@ -39,12 +39,12 @@
 	.play {
 		background: url('/wr/Public/images/pause-black.png') bottom no-repeat;
 	}
-	.play .play-left {
+/*	.play .play-left {
 		background: url('/wr/Public/images/rotator-black.png') left no-repeat;
 	}
 	.play .play-right {
 		background: url('/wr/Public/images/timer-black.png') right no-repeat;
-	}
+	}*/
 </style>
 <body>
 	<div class="header">
@@ -63,28 +63,23 @@
 	<?php foreach($nav as $key => $title) { $point = 0; ?>
 		<div <?php if($key == 0) { ?>style="padding:0;"<?php }?> class="title" id="<?php echo ($title['nav-name']); ?>" name="<?php echo ($title['nav-name']); ?>"><?php echo ($title['nav-name']); ?></div>
 		<div class="banner">
-			<div class="play">
-				<div class="play-left">
-					<div class="mask1"></div>
-				</div>
-				<div class="play-right">
-					<div class="mask2"></div>
-				</div>
-			</div>
+			<div class="play" id="off"></div>
 			<div class="bd">
 				<ul class="banner-content">
 					<?php foreach($content as $item) { if($title['id'] == $item['nav-id']) { $point++; switch($item['type']) { case 1 : ?> <li><img src="/wr/Public/images/<?php echo ($item['image']); ?>" alt=""></li><?php break; case 2 : ?> <li>
 												<div class="left-img"><img src="/wr/Public/images/<?php echo ($item['image']); ?>" alt=""></div>
-												<div class="right-text"><?php echo ($item['text-right']); ?></div>
+												<div class="right-text"><?php echo html_entity_decode($item['text-right']); ?></div>
 											</li><?php break; case 3 : ?> <li>
-												<div class="left-onlytext"><?php echo ($item['text-left']); ?></div>
-												<div class="right-onlytext"><?php echo ($item['text-right']); ?></div>
+												<div class="left-onlytext"><?php echo html_entity_decode($item['text-left']); ?></div>
+												<div class="right-onlytext"><?php echo html_entity_decode($item['text-right']); ?></div>
 											</li>
 					<?php break;}}}?>
 				</ul>
 			</div>
-			<?php if($point == 1) {continue;} ?>
 			<div class="hd">
+			<?php if($point <= 1) {?>
+				</div></div>
+			<?php continue;}?>
 				<ul class="clear banner-button">
 					<?php for($i = 0; $i < $point; $i++) { ?>
 						<li><?php echo ($i); ?></li>
@@ -98,7 +93,7 @@
 
 
 	<script>
-		$('.banner').slide({"mainCell": ".bd ul", "autoPlay": false, "delayTime": 3000});
+		$('.banner').slide({"mainCell": ".bd ul", "effect": "leftLoop", "autoPlay": false, "delayTime": 1200});
 
 		$('.snapshot').click(function() {
 			$('html, body').animate({scrollTop: $('#snapshot').offset().top - 200}, 2000);
@@ -109,10 +104,16 @@
 		});
 
 		$('.play').click(function() {
-			$(this).css({"background":"url('/wr/Public/images/pause-black.png') top no-repeat"});
-			$('.play-right').animate({"transform": "rotate(180deg)"}, 1500, function() {
-				$('play-left').animate({"transform": "rotate(180deg)"}, 1500);
-			});
+			var status = $(this).attr('id');
+			if (status == 'off') {
+				$(this).css({"background":"url('/wr/Public/images/pause-black.png') top no-repeat"});
+				$(this).parent().slide({"mainCell": ".bd ul", "effect": "left", "autoPlay": true, "delayTime": 1200});
+				$(this).attr('id', 'on');
+			}else {
+				$(this).css({"background":"url('/wr/Public/images/pause-black.png') bottom no-repeat"});
+				$(this).parent().slide({"mainCell": ".bd ul", "effect": "left", "autoPlay": false, "delayTime": 1200});
+				$(this).attr('id', 'off');
+			}
 		});
 	</script>
 </body>

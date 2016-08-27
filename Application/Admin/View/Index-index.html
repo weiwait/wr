@@ -29,7 +29,7 @@
         $('iframe').css({"height": $('.body').height() - 20});
 
         $(window).resize(function() {
-            window.history.go(0);
+            window.history.back();
         });
 
         $('.left h4').click(function() {
@@ -44,7 +44,7 @@
             if(preg.test(c)) {
                 return;
             }
-            preg = new RegExp(/(open+)/);
+            preg = new RegExp(/(\bopen\b)/);
             var open = preg.test(c);
             if(open) {
                 $('.on').css({"display": "none"}).removeClass('on');

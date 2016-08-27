@@ -74,15 +74,14 @@ html {
 	float: left;
 }
 .right-text {
-	width: 320px;
+	width: 260px;
 	height: 520px;
 	float: right;
-	background: red;
+	margin: 50px 40px 0 0 ;
 }
 .left-onlytext, .right-onlytext {
 	width: 386px;
 	height: 520px;
-	background: green;
 }
 .left-onlytext {
 	float: left;
@@ -91,10 +90,10 @@ html {
 	float: right;
 }
 .bd ul li:first-child {
-	display: block;
+	/*display: block;*/
 }
 .bd ul li {
-	display: none;
+	/*display: none;*/
 }
 .prev {
 	width: 78px;
@@ -144,6 +143,7 @@ html {
 	right: 0;
 	bottom: -56px;
 	cursor: pointer;
+	z-index: 9999;
 	-webkit-filter: grayscale(1);
 	-o-filter: grayscale(1);
 	filter: grayscale(1);
