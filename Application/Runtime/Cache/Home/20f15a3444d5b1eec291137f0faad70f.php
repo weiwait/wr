@@ -2,10 +2,13 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE-edge,chrome=1">
+	<meta name="viewport" content="width=device-width,inital-scale=1">
 	<title><?php echo ($title); ?></title>
 	<link rel="stylesheet" type="text/css" href="/wr/Public/css/style.css">
 	<script src="/wr/Public/js/jquery-1.9.1.min.js"></script>
 	<script src="/wr/Public/js/jquery.SuperSlide.2.1.1.js"></script>
+	<script src="/wr/Public/js/jquery.mousewheel.js"></script>
 </head>
 <style>
 	.nav li {
@@ -51,8 +54,8 @@
 		<div class="nav-wrap clear">
 			<a class="logo" href=""><img src="/wr/Public/images/<?php echo ($logo); ?>"></a>
 			<ul class="nav clear">
-				<?php foreach($nav as $subnav) { ?>
-					<li class="<?php echo ($subnav['nav-name']); ?>"><?php echo ($subnav['nav-name']); ?></li>
+				<?php foreach($nav as $key => $subnav) { ?>
+					<li class="anchor<?php echo ($key); ?>"><?php echo ($subnav['nav-name']); ?></li>
 				<?php } ?>
 			</ul>
 		</div>
@@ -61,7 +64,7 @@
 
 
 	<?php foreach($nav as $key => $title) { $point = 0; ?>
-		<div <?php if($key == 0) { ?>style="padding:0;"<?php }?> class="title" id="<?php echo ($title['nav-name']); ?>" name="<?php echo ($title['nav-name']); ?>"><?php echo ($title['nav-name']); ?></div>
+		<div <?php if($key == 0) { ?>style="padding:0;"<?php }?> class="title" id="anchor<?php echo ($key); ?>" name="<?php echo ($title['nav-name']); ?>"><?php echo ($title['nav-name']); ?></div>
 		<div class="banner">
 			<div class="play" id="off"></div>
 			<div class="bd">
@@ -95,8 +98,18 @@
 	<script>
 		$('.banner').slide({"mainCell": ".bd ul", "effect": "leftLoop", "autoPlay": false, "delayTime": 1200});
 
-		$('.snapshot').click(function() {
-			$('html, body').animate({scrollTop: $('#snapshot').offset().top - 200}, 2000);
+		$('.nav li').click(function() {
+			var anchor = $(this).attr('class');
+			$('html, body').stop(true);
+			if (anchor == 'anchor0') {
+				$('html, body').animate({scrollTop: $('#' + anchor).offset().top - 200}, 1000);
+			}else {
+				$('html, body').animate({scrollTop: $('#' + anchor).offset().top}, 1000);
+			}
+		});
+
+		$('body').mousewheel(function() {
+			$('html, body').stop(true);
 		});
 
 		$('.ab').click(function() {

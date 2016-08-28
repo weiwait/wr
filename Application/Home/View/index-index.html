@@ -2,10 +2,13 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE-edge,chrome=1">
+	<meta name="viewport" content="width=device-width,inital-scale=1">
 	<title>{$title}</title>
 	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/style.css">
 	<script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
 	<script src="__PUBLIC__/js/jquery.SuperSlide.2.1.1.js"></script>
+	<script src="__PUBLIC__/js/jquery.mousewheel.js"></script>
 </head>
 <style>
 	.nav li {
@@ -51,8 +54,8 @@
 		<div class="nav-wrap clear">
 			<a class="logo" href=""><img src="__PUBLIC__/images/{$logo}"></a>
 			<ul class="nav clear">
-				<?php foreach($nav as $subnav) { ?>
-					<li class="{$subnav['nav-name']}">{$subnav['nav-name']}</li>
+				<?php foreach($nav as $key => $subnav) { ?>
+					<li class="anchor{$key}">{$subnav['nav-name']}</li>
 				<?php } ?>
 			</ul>
 		</div>
@@ -61,7 +64,7 @@
 
 
 	<?php foreach($nav as $key => $title) { $point = 0; ?>
-		<div <?php if($key == 0) { ?>style="padding:0;"<?php }?> class="title" id="{$title['nav-name']}" name="{$title['nav-name']}">{$title['nav-name']}</div>
+		<div <?php if($key == 0) { ?>style="padding:0;"<?php }?> class="title" id="anchor{$key}" name="{$title['nav-name']}">{$title['nav-name']}</div>
 		<div class="banner">
 			<div class="play" id="off"></div>
 			<div class="bd">
@@ -101,9 +104,18 @@
 	<script>
 		$('.banner').slide({"mainCell": ".bd ul", "effect": "leftLoop", "autoPlay": false, "delayTime": 1200});
 
-		$('.snapshot').click(function() {
-			$('.nav li').stop();
-			$('html, body').animate({scrollTop: $('#snapshot').offset().top - 200}, 2000);
+		$('.nav li').click(function() {
+			var anchor = $(this).attr('class');
+			$('html, body').stop(true);
+			if (anchor == 'anchor0') {
+				$('html, body').animate({scrollTop: $('#' + anchor).offset().top - 200}, 1000);
+			}else {
+				$('html, body').animate({scrollTop: $('#' + anchor).offset().top}, 1000);
+			}
+		});
+
+		$('body').mousewheel(function() {
+			$('html, body').stop(true);
 		});
 
 		$('.ab').click(function() {

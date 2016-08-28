@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X_UA_Compatible" content="IE-edge,chrome=1">
     <meta name="viewport" content="width=device-width,inital-scale=1">
     <title>Admin</title>
-    <link rel="stylesheet" href="__PUBLIC__/css/admin.css">
-    <script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
-    <script src="__PUBLIC__/js/jquery.SuperSlide.2.1.1.js"></script>
+    <link rel="stylesheet" href="/wr/Public/css/admin.css">
+    <script src="/wr/Public/js/jquery-1.9.1.min.js"></script>
+    <script src="/wr/Public/js/jquery.SuperSlide.2.1.1.js"></script>
 </head>
 <body>
     <div class="header">
@@ -16,13 +16,13 @@
     </div>
     <div class="body clear">
         <div class="left">
-            <h4 data-url="{:U('Admin/User/user')}" data-iframe="001">管理员</h4>
-            <h4 data-url="{:U('Admin/AddColumn/addColumn')}" data-iframe="002">添加栏位</h4>
-            <h4 data-url="{:U('Admin/AddContent/addContent')}" data-iframe="003">添加内容</h4>
-            <h4 data-url="{:U('Admin/ContManage/column')}" data-iframe="004">栏位管理</h4>
+            <h4 data-url="<?php echo U('Admin/User/user');?>" data-iframe="001">管理员</h4>
+            <h4 data-url="<?php echo U('Admin/AddColumn/addColumn');?>" data-iframe="002">添加栏位</h4>
+            <h4 data-url="<?php echo U('Admin/AddContent/addContent');?>" data-iframe="003">添加内容</h4>
+            <h4 data-url="<?php echo U('Admin/ContManage/column');?>" data-iframe="004">栏位管理</h4>
         </div>
         <div class="right">
-            <iframe class="on" src="{:U('Admin/Iframe/index')}" frameborder="0"></iframe>
+            <iframe class="on" src="<?php echo U('Admin/Iframe/index');?>" frameborder="0"></iframe>
         </div>
     </div>
     <script>
@@ -32,9 +32,7 @@
             $('iframe').css({"height": $('.body').height() - 20});
         }
 
-        $(function() {
-            init();
-        });
+        $.ready(init());
 
         $(window).resize(function() {
             init();

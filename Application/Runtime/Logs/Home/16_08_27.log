@@ -1706,3 +1706,27 @@ INFO: [ app_end ] --START--
 INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000976s ]
 INFO: [ app_end ] --END-- [ RunTime:0.000976s ]
 
+[ 2016-08-27T21:43:04+08:00 ] 127.0.0.1 /wr/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000023s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000844s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.013393s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.013513s ]
+SQL: SHOW COLUMNS FROM `nav` [ RunTime:0.0251s ]
+SQL: SHOW COLUMNS FROM `content` [ RunTime:0.0168s ]
+SQL: SELECT * FROM `content`  [ RunTime:0.0004s ]
+SQL: SELECT * FROM `nav` ORDER BY sort asc  [ RunTime:0.0002s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000078s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000168s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.138203s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.138313s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001183s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001319s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003810s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003924s ]
+
