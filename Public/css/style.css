@@ -42,8 +42,11 @@ li {
 	padding: 0 25px 0 25px;
 	color: #fff;
 	font-style: normal;
-	font-weight: 400;
+	font-weight: bold;
 	cursor: pointer;
+}
+.nav .active, .nav li:hover {
+	color: #445560;
 }
 .level-line {
 	width: 100%;

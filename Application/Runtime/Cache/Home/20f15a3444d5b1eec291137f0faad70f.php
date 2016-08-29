@@ -97,6 +97,10 @@
 
 	<script>
 		$('.banner').slide({"mainCell": ".bd ul", "effect": "leftLoop", "autoPlay": false, "delayTime": 1200});
+		var nav = [];
+		for (var i = 0; i < $('.title').length; i++) {
+			nav[i] = $($('.title')[i]).offset().top;
+		}
 
 		$('.nav li').click(function() {
 			var anchor = $(this).attr('class');
@@ -106,6 +110,33 @@
 			}else {
 				$('html, body').animate({scrollTop: $('#' + anchor).offset().top}, 1000);
 			}
+			$('.nav .active').removeClass('active');
+			$(this).addClass('active');
+		});
+
+		$(window).scroll(function() {
+			for (var i = 0; i < nav.length; i++) {
+				if (nav[i] - $(window).scrollTop() < 150 & nav[i] - $(window).scrollTop() > -150 + -300 * i) {
+					$('.nav .active').removeClass('active');
+					$($('.nav li')[i]).addClass('active');
+					// console.log(nav[1] - $(window).scrollTop());
+				}
+			}
+			// if (nav[0] - $(window).scrollTop() > -150) {
+			// 	$('.nav .active').removeClass('active');
+			// 	$($('.nav li')[0]).addClass('active');
+			// 	console.log(nav[0] - $(window).scrollTop());
+			// }
+			// if (nav[1] - $(window).scrollTop() < 150 & nav[1] - $(window).scrollTop() > -450) {
+			// 	$('.nav .active').removeClass('active');
+			// 	$($('.nav li')[1]).addClass('active');
+			// 	console.log(nav[1] - $(window).scrollTop());
+			// }
+			// if (nav[2] - $(window).scrollTop() < 150 & nav[2] - $(window).scrollTop() > -750) {
+			// 	$('.nav .active').removeClass('active');
+			// 	$($('.nav li')[2]).addClass('active');
+			// 	console.log(nav[2] - $(window).scrollTop());
+			// }
 		});
 
 		$('body').mousewheel(function() {
@@ -116,15 +147,21 @@
 			$('html, body').animate({scrollTop: $('#ab').offset().top}, 2000);
 		});
 
+
+		var interval= '';
 		$('.play').click(function() {
 			var status = $(this).attr('id');
 			if (status == 'off') {
+				interval = setInterval(function() {
+					$('.next').trigger('click');
+				}, 3000);
 				$(this).css({"background":"url('/wr/Public/images/pause-black.png') top no-repeat"});
-				$(this).parent().slide({"mainCell": ".bd ul", "effect": "left", "autoPlay": true, "delayTime": 1200});
+				// $(this).parent().slide({"mainCell": ".bd ul", "effect": "left", "autoPlay": true, "delayTime": 1200});
 				$(this).attr('id', 'on');
 			}else {
+				clearInterval(interval);
 				$(this).css({"background":"url('/wr/Public/images/pause-black.png') bottom no-repeat"});
-				$(this).parent().slide({"mainCell": ".bd ul", "effect": "left", "autoPlay": false, "delayTime": 1200});
+				// $(this).parent().slide({"mainCell": ".bd ul", "effect": "left", "autoPlay": false, "delayTime": 1200});
 				$(this).attr('id', 'off');
 			}
 		});

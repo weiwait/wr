@@ -32,7 +32,9 @@
             $('iframe').css({"height": $('.body').height() - 20});
         }
 
-        $.ready(init());
+        $(function() {
+            init();
+        });
 
         $(window).resize(function() {
             init();
