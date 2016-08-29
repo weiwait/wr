@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE-edge, chrome=1">
+	<meta name="viewport" content="width=device-width, inital-scale=1">
+	<title></title>
+	<style type="text/css">
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		.continer {
+			width: 40px;
+			height: 40px;
+			margin: 100px auto;
+			position: relative;
+		}
+		.left, .right, .status {
+			width: 40px;
+			height: 40px;
+		}
+		.right {
+			opacity: 0;
+			background: url(./images/timer-black.png) no-repeat;
+			transition: transform 1.5s linear;
+		}
+		.left {
+			background: url(./images/rotator-black.png) no-repeat;
+			position: absolute;
+			top: 0;
+			left: 0;
+			transition: transform 1.5s linear;
+		}
+		.mask {
+			width: 20px;
+			height: 40px;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: #fff;
+		}
+		.status {
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: url(./images/pause-black.png) bottom no-repeat;
+		}
+	</style>
+</head>
+<body>
+	<div class="continer">
+		<div class="left" id="left"></div>
+		<div class="right"></div>
+		<div class=mask></div>
+		<div class=status></div>
+	</div>
+	<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+	<script type="text/javascript">
+		(function($) {
+			$('.continer').click(function() {
+				$('.status').css({"background": "url(./images/pause-black.png) top no-repeat"})
+				$('.left').css({"transform": "rotate(180deg)"});
+				$('.left').on('transitionend', function() {
+					$('.mask').css({"display": "none"});
+					$('.right').css({"opacity": 1});
+					$('.right').css({"transform": "rotate(180deg)"});
+				});
+			})
+		})(jQuery);
+	</script>
+</body>
+</html>
