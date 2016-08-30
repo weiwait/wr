@@ -39,15 +39,15 @@
 	.hd ul .on {
 		background: url('/wr/Public/images/bullets.jpg') right no-repeat;
 	}
-	.play {
+	.play-status {
 		background: url('/wr/Public/images/pause-black.png') bottom no-repeat;
 	}
-/*	.play .play-left {
+	.play .play-left {
 		background: url('/wr/Public/images/rotator-black.png') left no-repeat;
 	}
 	.play .play-right {
 		background: url('/wr/Public/images/timer-black.png') right no-repeat;
-	}*/
+	}
 </style>
 <body>
 	<div class="header">
@@ -63,10 +63,9 @@
 	<div class="level-line"></div>
 
 
-	<?php foreach($nav as $key => $title) { $point = 0; ?>
-		<div <?php if($key == 0) { ?>style="padding:0;"<?php }?> class="title" id="anchor<?php echo ($key); ?>" name="<?php echo ($title['nav-name']); ?>"><?php echo ($title['nav-name']); ?></div>
+	<?php foreach($nav as $key_play => $title) { $point = 0; ?>
+		<div <?php if($key_play == 0) { ?>style="padding:0;"<?php }?> class="title" id="anchor<?php echo ($key_play); ?>" name="<?php echo ($title['nav-name']); ?>"><?php echo ($title['nav-name']); ?></div>
 		<div class="banner">
-			<div class="play" id="off"></div>
 			<div class="bd">
 				<ul class="banner-content">
 					<?php foreach($content as $item) { if($title['id'] == $item['nav-id']) { $point++; switch($item['type']) { case 1 : ?> <li><img src="/wr/Public/images/<?php echo ($item['image']); ?>" alt=""></li><?php break; case 2 : ?> <li>
@@ -89,13 +88,50 @@
 					<?php }?>
 				</ul>
 			</div>
-			<a class="prev" href="javascript:void(0)"></a>
-			<a class="next" href="javascript:void(0)"></a>
+
+			<div class="play" data-id="off" data-index="<?php echo ($key_play); ?>">
+				<div class="play-wrap">
+					<div class="<?php echo ($key_play); ?>-play-left play-left"></div>
+					<div class="<?php echo ($key_play); ?>-play-right play-right"></div>
+					<div class="<?php echo ($key_play); ?>-play-mask play-mask"></div>
+					<div class="<?php echo ($key_play); ?>-play-status play-status"></div>
+					<div class="<?php echo ($key_play); ?>-play-mask2 play-mask2"></div>
+				</div>
+			</div>
+
+			<a data-pause="pause<?php echo ($key_play); ?>" class="prev" href="javascript:void(0)"></a>
+			<a data-pause="pause<?php echo ($key_play); ?>" class="next" href="javascript:void(0)"></a>
 		</div>
 	<?php }?>
 
 
 	<script>
+
+		$('.play').click(function() {
+			var status = $(this).attr('data-id');
+			var index = $(this).attr('data-index');
+			if (status == 'off') {
+				$(this).attr('data-id', 'on');
+				$('.' + index +'-play-status').css({"background": "url('/wr/Public/images/pause-black.png') top no-repeat"});
+				$('.' + index +'-play-left').css({"transition": "transform 1.5s linear", "transform": "rotate(180deg)"});
+				$('.' + index +'-play-left').on('transitionend', function() {
+					$('.' + index +'-play-mask').css({"visibility": "hidden"});
+					$('.' + index +'-play-right').css({"opacity": 1, "transition": "transform 1.5s linear", "transform": "rotate(180deg)"});
+				});
+				$('.' + index +'-play-right').on('transitionend', function() {
+					$('.' + index +'-play-left, .play-right').removeAttr('style');
+					$('.' + index +'-play-mask').css({"visibility": "visible"});
+					$("[data-pause = 'pause" + index + "']").trigger('click');
+					$('.' + index +'-play-left').css({"transition": "transform 1.5s linear", "transform": "rotate(180deg)"});
+				});
+			}else {
+				$(this).attr('data-id', 'off');
+				$('.' + index +'-play-left, .' + index +'-play-right').removeAttr('style');
+				$('.' + index +'-play-mask').css({"visibility": "visible"});
+				$('.' + index +'-play-status').css({"background": "url('/wr/Public/images/pause-black.png') bottom no-repeat"});
+			}
+		});
+
 		$('.banner').slide({"mainCell": ".bd ul", "effect": "leftLoop", "autoPlay": false, "delayTime": 1200});
 		var nav = [];
 		for (var i = 0; i < $('.title').length; i++) {
@@ -119,24 +155,8 @@
 				if (nav[i] - $(window).scrollTop() < 150 & nav[i] - $(window).scrollTop() > -150 + -300 * i) {
 					$('.nav .active').removeClass('active');
 					$($('.nav li')[i]).addClass('active');
-					// console.log(nav[1] - $(window).scrollTop());
 				}
 			}
-			// if (nav[0] - $(window).scrollTop() > -150) {
-			// 	$('.nav .active').removeClass('active');
-			// 	$($('.nav li')[0]).addClass('active');
-			// 	console.log(nav[0] - $(window).scrollTop());
-			// }
-			// if (nav[1] - $(window).scrollTop() < 150 & nav[1] - $(window).scrollTop() > -450) {
-			// 	$('.nav .active').removeClass('active');
-			// 	$($('.nav li')[1]).addClass('active');
-			// 	console.log(nav[1] - $(window).scrollTop());
-			// }
-			// if (nav[2] - $(window).scrollTop() < 150 & nav[2] - $(window).scrollTop() > -750) {
-			// 	$('.nav .active').removeClass('active');
-			// 	$($('.nav li')[2]).addClass('active');
-			// 	console.log(nav[2] - $(window).scrollTop());
-			// }
 		});
 
 		$('body').mousewheel(function() {
@@ -145,25 +165,6 @@
 
 		$('.ab').click(function() {
 			$('html, body').animate({scrollTop: $('#ab').offset().top}, 2000);
-		});
-
-
-		var interval= '';
-		$('.play').click(function() {
-			var status = $(this).attr('id');
-			if (status == 'off') {
-				interval = setInterval(function() {
-					$('.next').trigger('click');
-				}, 3000);
-				$(this).css({"background":"url('/wr/Public/images/pause-black.png') top no-repeat"});
-				// $(this).parent().slide({"mainCell": ".bd ul", "effect": "left", "autoPlay": true, "delayTime": 1200});
-				$(this).attr('id', 'on');
-			}else {
-				clearInterval(interval);
-				$(this).css({"background":"url('/wr/Public/images/pause-black.png') bottom no-repeat"});
-				// $(this).parent().slide({"mainCell": ".bd ul", "effect": "left", "autoPlay": false, "delayTime": 1200});
-				$(this).attr('id', 'off');
-			}
 		});
 	</script>
 </body>

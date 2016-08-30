@@ -137,34 +137,50 @@ li {
 	margin: 8px 0 0 0;
 }
 .play {
-	width: 40px;
-	height: 40px;
+	z-index: 998;
 	position: absolute;
 	right: 0;
 	bottom: -56px;
 	cursor: pointer;
-	z-index: 9999;
-	-webkit-filter: grayscale(1);
-	-o-filter: grayscale(1);
-	filter: grayscale(1);
+	-webkit-filter: grayscale(100%);
+	-o-filter: grayscale(100%);
+	filter: grayscale(100%);
 }
-.play .play-right {
+.play, .play-wrap, .play-left, .play-right, .play-status, .play-mask2 {
 	width: 40px;
 	height: 40px;
-	position: absolute;
 }
-.play .play-right .mask2 {
+.play-mask2 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: #fff;
+	opacity: 0.5;
+}
+.play-wrap {
+	position: relative;
+}
+.play-left {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.play-status {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.play-right {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+}
+.play-mask {
 	width: 20px;
 	height: 40px;
-	float: right;
-}
-.play .play-left {
-	width: 40px;
-	height: 40px;
 	position: absolute;
-}
-.play .play-left .mask1{
-	width: 20px;
-	height: 40px;
-	float: left;
+	top: 0;
+	left: 0;
+	background: #fff;
 }
