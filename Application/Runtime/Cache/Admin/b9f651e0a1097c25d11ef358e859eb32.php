@@ -5,6 +5,13 @@
     <title>Document</title>
 </head>
 <style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        list-style: none;
+    }
     .nav-revise td {
         text-align: center;
     }
@@ -15,7 +22,7 @@
         width: 168px;
         height: 148px;
         background: pink;
-        position: absolute;
+        position: fixed;
         top: 38%;
         left: 38%;
         font-size: 28px;
@@ -24,28 +31,50 @@
         display: none;
     }
     .cont-item {
-        height: 104px;
+        height: 520px;
+        margin: 20px 10px 0 0;
+        display: none;
     }
     .img-item {
-        height: 104px;
-        width: 168px;
+        width: 1170px;
         float: left;
         border: 1px solid #a7a7a7;
     }
     .form-item {
         float: left;
         width: 80px;
-        height: 104px;
+        height: 520px;
         border: 1px solid #a7a7a7;
     }
     .action-item {
         float: left;
         width: 80px;
-        height: 104px;
+        height: 520px;
         border: 1px solid #a7a7a7;
+    }
+    .column-title {
+        width: 100%;
+        height: 20px;
+        line-height: 20px;
+        background: #a7a7a7;
+        margin: 10px auto;
+    }
+    .column-title li {
+        float: left;
+        width: 98px;
+        height: 20px;
+        line-height: 20px;
+        background: #a7a7a7;
+        cursor: pointer;
+    }
+    .cf:after {
+        display: block;
+        clear: both;
+        content: '';
     }
 </style>
 <body>
+    <div class="refresh" style="border: 1px solid #666;background:#a7a7a7;position:fixed;right:50px;cursor:pointer;">REFRESH</div>
     <div class="nav-revise">
         <div class="popup-true">修改成功</div>
         <div class="popup-false">修改失败</div>
@@ -54,7 +83,7 @@
                 <form id ="sub" action="<?php echo U('Admin/ContManage/navRevise');?>" method="post" onsubmit="return sub();">
                     <tr><th colspan="<?php echo count($nav)+2;?>">栏位修改</th></tr>
                     <tr>
-                        <td>排序</td>
+                        <td>排序: </td>
                         <?php foreach($nav as $column) { ?>
                             <td><input type="text" name="sort[]" value="<?php echo ($column['sort']); ?>"></td>
                         <?php } ?>
@@ -63,7 +92,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>名称</td>
+                        <td>名称: </td>
                         <?php foreach($nav as $column) { ?>
                             <td><input type="text" name="name[]" value="<?php echo ($column['nav-name']); ?>"></td>
                         <?php } ?>
@@ -81,36 +110,99 @@
         </table>
     </div>
     <div class="cont-revise">
+        <div data-url="<?php echo U('Admin/ContManage/contDelete');?>"></div>
         <div class="column-title">
-            <ul>
-                <?php foreach($nav as $cn) {?>
-                    <li>{$cn['nav-name']}</li>
-                <?php }?>
+            <ul class="cf">
+                <?php foreach($nav as $cn) { ?>
+                    <li id="<?php echo ($cn['id']); ?>"><?php echo ($cn['nav-name']); ?></li>
+                <?php } ?>
             </ul>
         </div>
-        <?php foreach($content as $item) {?>
-        <div class="cont-item">
+        <?php foreach($content as $num => $row) {?>
+        <div class="cont-item" data-swicth="<?php echo $row['nav-id'] ?>">
+        <form id="sub<?php echo $row['id']; ?>" action="<?php echo U('Admin/ContManage/contRevise');?>" method="post" enctype="multipart/form-data" onsubmit="return sub();">
             <div class="img-item">
-                <img src="/wr/Public/images/{$item['image']}" alt="">
+                <?php if ($row['type'] == 1) {?>
+                    <img src="/wr/Public/images/<?php echo $row['image']; ?>" style="width:840px;height:520px;">
+                    <div style="width:320px;height:520px;float:right;">
+                        <input type="file" name="picture">
+                        <input type="submit" data-form-id="sub<?php echo $row['id']; ?>" value="修改">
+                        <input class="delete" type="button" data-delete-id="<?php echo $row['id']; ?>" value="删除">
+                    </div>
+                <?php }?>
+
+
+                <?php if ($row['type'] == 2) {?>
+                <img src="/wr/Public/images/<?php echo $row['image']; ?>" style="width:520px;height:520px;float:left">
+                <div class="text-replace" style="width:650px;height:400px;float:left">
+                    <textarea name="right" class="editor" id="" style="width:650px;height:380px;">
+                        <?php echo html_entity_decode($row['text-right']); ?>
+                    </textarea>
+                </div>
+                <div class="text-action" style="width:620px;height:120px;float:right;">
+                    <input type="file" name="picture">
+                    <input type="submit" data-form-id="sub<?php echo $row['id']; ?>" value="修改">
+                    <button class="delete" data-delete-id="<?php echo $row['id'] ?>">删除</button>
+                </div>
+                <?php }?>
+
+
+                <?php if ($row['type'] == 3) {?>
+                <div class="item-left" style="width:650px;float:left;">
+                    <div class="text-replace" style="width:420px;height:520px;">
+                        <textarea name="left" class="editor" id="" style="width:420px;height:520px;">
+                            <?php echo html_entity_decode($row['text-left']); ?>
+                        </textarea>
+                    </div>
+                    <p>　 ＊　　　＊　　　＊　　　＊　　　＊　　　＊　　　＊　　　＊　　　＊　　　＊</p>
+                    <div class="text-replace" style="width:420px;height:520px;">
+                        <textarea name="right" class="editor" id="" style="width:420px;height:520px;">
+                            <?php echo html_entity_decode($row['text-right']); ?>
+                        </textarea>
+                    </div>
+                </div>
+                <div class="item-action" style="width:520px;height:520px;float:left;">
+                    <input type="submit" data-form-id="sub<?php echo $row['id']; ?>" value="修改">
+                    <button class="delete" data-delete-id="<?php echo $row['id'] ?>">删除</button>
+                </div>
+                <?php }?>
             </div>
-            <div class="form-item">
-                
-            </div>
-            <div class="action-item">
-                
-            </div>
+            <div><input type="hidden" name="MAX_FILE_SIZE" value="2000000"></div>
+            <input type="hidden" name="id" value="<?php echo ($row['id']); ?>">
+            <input type="hidden" name="type" value="<?php echo ($row['type']); ?>">
+            </form>
         </div>
         <?php }?>
     </div>
+    <script charset="utf-8" src="/wr/Public/kindeditor/kindeditor.js"></script>
+    <script charset="utf-8" src="/wr/Public/kindeditor/lang/zh_CN.js"></script>
     <script type="text/javascript" src="/wr/Public/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="/wr/Public/js/ajaxForm.js"></script>
     <script>
+
+        (function() {
+            var index = $($('.column-title li')[0]).attr('id');
+            $('[data-swicth='+ index +']').css({"display": "block"});
+        })();
+
+        $('.column-title li').click(function() {
+            var index = $(this).attr('id');
+            $('.cont-item').css({"display": "none"});
+            $('[data-swicth='+ index +']').css({"display": "block"});
+
+        })
+
+        $('.refresh').click(function() {
+            window.location.reload();
+        });
+
         var form = '';
         $("[data-form-id]").click(function() {
             form = $(this).attr('data-form-id');
         });
 
         function sub() {
+            textval();
             $('#' + form).ajaxSubmit(function(m) {
                 if(m >= 1) {
                     $('.popup-true').fadeIn(1200, function() {
@@ -128,6 +220,42 @@
             });
             return false;
         }
+
+        function textval() {
+            var textobj = $('.text-replace');
+            for (var i = 0; i < textobj.length; i++) {
+                var val = '';
+                val = $(textobj[i]).find('.ke-edit-iframe').contents().find('.ke-content').html();
+                $(textobj[i]).children('textarea').html(val);
+            }
+        }
+
+        KindEditor.options.filterMode = false;
+        KindEditor.ready(function(K) {
+                window.editor = K.create('.editor');
+        });
+
+        $('.delete').click(function() {
+            var url = $('[data-url]').attr('data-url');
+            var id = $(this).attr('data-delete-id');
+            if (confirm('are you sure?')) {
+                $.post(url, {"id" : id}, function(data) {
+                if(data >= 1) {
+                    $('.popup-true').fadeIn(1200, function() {
+                        $(this).slideUp(800,function() {
+                            window.location.reload();
+                        });
+                    });
+                }else {
+                    $('.popup-false').slideDown(1200, function() {
+                        $(this).fadeOut(800, function() {
+                            window.location.reload();
+                        });
+                    });
+                }
+            });
+            }
+        });
     </script>
 </body>
 </html>

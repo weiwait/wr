@@ -51,7 +51,7 @@ class AddContentController extends Controller
         $up = new \Org\Util\FileUpload;
         $path = "./Public/images/";
         $up -> set("path", $path);
-        $up -> set("maxsize", 10000000);
+        $up -> set("maxsize", 2000000);
         $up -> set("allowtype", array("gif", "png", "jpg","jpeg"));
         $up -> set("israndname", false);
         if ($up->upload('picture')) {

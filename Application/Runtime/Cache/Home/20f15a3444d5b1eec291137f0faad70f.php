@@ -99,7 +99,7 @@
 				</div>
 			</div>
 
-			<a data-pause="pause<?php echo ($key_play); ?>" class="prev" href="javascript:void(0)"></a>
+			<a class="prev" href="javascript:void(0)"></a>
 			<a data-pause="pause<?php echo ($key_play); ?>" class="next" href="javascript:void(0)"></a>
 		</div>
 	<?php }?>
