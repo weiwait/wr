@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>登录</title>
     <style>
         * {
             padding: 0;
@@ -11,7 +11,10 @@
         li {
             list-style: none;
         }
-        .revise-wrap {
+        body {
+            background: #defdef;
+        }
+        .login-wrap {
             width: 260px;
             height: 260px;
             border-radius: 30px;
@@ -20,6 +23,10 @@
             left: 50%;
             margin: -130px 0 0 -130px;
             background: #abcdef;
+        }
+        .verify {
+            width: 200px;
+            height: 40px;
         }
         input {
             text-indent: 4px;
@@ -34,20 +41,19 @@
             height: 200px;
             margin: 30px auto;
         }
-        h4 {
-            margin: 5px 0 0 0;
-            text-align: center;
+        img {
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
-    <div class="revise-wrap">
-        <h4>修改登录信息</h4>
-        <form action="{:U('Admin/User/userRevise')}" method="post" id="revise" onsubmit="return revise();">
+    <div class="login-wrap">
+        <form action="{:U('Admin/Index/login')}" method="post" id="login" onsubmit="return login();">
             <ul>
-                <li><input type="text" name="username" value="{$username}" placeholder="input your new username"></li>
-                <li><input autocomplete="off" class="newpwd" type="text" name="password" placeholder="input your new password"></li>
-                <li><input id="verify" type="text" name="verify" placeholder="input your old password"></li>
+                <li><input type="text" name="username" placeholder="input your username"></li>
+                <li><input type="password" name="password" placeholder="input your password"></li>
+                <li><input id="verify" type="text" name="verify" value="" placeholder="input the verify from below"></li>
+                <li><img class="verify" src="{:U('Admin/Index/getVerify')}" alt="verify"></li>
                 <li><input class="submit" type="submit" value="submit"></li>
             </ul>
         </form>
@@ -55,28 +61,34 @@
     <script type="text/javascript" src="__PUBLIC__/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/js/ajaxForm.js"></script>
     <script>
-        function revise() {
+        function login() {
             var val = $('#verify').val();
-            $.post("<?php echo U('Admin/User/verify') ?>", {'verify': val}, function(data) {
+            $.post("<?php echo U('Admin/Index/verifyCompare') ?>", {'verify': val}, function(data) {
                 if (data == 1) {
-                    $('#revise').ajaxSubmit(function(m) {
-                        if (m >= 1) {
-                            alert('revise success!');
-                            window.location.reload(true);
+                    $('#login').ajaxSubmit(function(m) {
+                        if (m == 1) {
+                            window.location = "<?php echo U('Admin/Index/index') ?>";
                         }else {
                             alert('username or password error!');
+                            getVerify();
                         }
                     });
                 }else {
                     alert('verify error, input again please!');
-                    $('#verify').val('');
+                    getVerify();
                 }
             });
             return false;
         }
-        $('input').focus(function() {
-            $('.newpwd').attr('type', 'password');
-        });
+
+        $('.verify').click(function() {
+            getVerify();
+        })
+
+        function getVerify() {
+            var src = $('.verify').attr('src');
+            $('.verify').attr('src', src);
+        }
     </script>
 </body>
 </html>

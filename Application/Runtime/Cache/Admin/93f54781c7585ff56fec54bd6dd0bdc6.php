@@ -13,6 +13,7 @@
     <div class="header">
         <h3>后台管理</h3>
         <div class="header-nav"></div>
+        <div class="quit" style="text-align:center;border-radius:3px;cursor:pointer;width:40px;height: 20px;background:#abcdef;position:fixed;right:34px;top:34px;">quit</div>
     </div>
     <div class="body clear">
         <div class="left">
@@ -93,6 +94,18 @@
             });
             $($("header-nav h4")[0]).trigger('click');
         }
+
+        $('.quit').click(function() {
+            if (confirm('are you sure quit?')) {
+                $.get("<?php echo U('Admin/Index/quit') ?>", function(m) {
+                    if (m == 1) {
+                        window.location.reload(true);
+                    }else {
+                        alert('quit error!');
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html>
